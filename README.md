@@ -68,26 +68,26 @@ Ajouter la configuration suivante :
     ServerName votre_domaine.com
     ServerAlias www.votre_domaine.com
     
-    Alias /static/ /var/www/Web-Jimmyxe/static/
-    Alias /media/ /var/www/Web-Jimmyxe/media/
+    Alias /static/ /var/www/jimmyxe/static/
+    Alias /media/ /var/www/jimmyxe/media/
     
-    <Directory /var/www/Web-Jimmyxe/static>
+    <Directory /var/www/jimmyxe/static>
         Require all granted
     </Directory>
     
-    <Directory /var/www/Web-Jimmyxe/media>
+    <Directory /var/www/jimmyxe/media>
         Require all granted
     </Directory>
     
-    <Directory /var/www/Web-Jimmyxe/jimmyxe>
+    <Directory /var/www/jimmyxe/jimmyxe>
         <Files wsgi.py>
             Require all granted
         </Files>
     </Directory>
     
-    WSGIDaemonProcess jimmyxe python-path=/var/www/Web-Jimmyxe python-home=/var/www/Web-Jimmyxe/venv
+    WSGIDaemonProcess jimmyxe python-path=/var/www/jimmyxe python-home=/var/www/jimmyxe/venv
     WSGIProcessGroup jimmyxe
-    WSGIScriptAlias / /var/www/Web-Jimmyxe/jimmyxe/wsgi.py
+    WSGIScriptAlias / /var/www/jimmyxe/jimmyxe/wsgi.py
 </VirtualHost>
 ```
 
@@ -95,11 +95,12 @@ Ajouter la configuration suivante :
 
 ```bash
 # Copier le projet dans /var/www/
-sudo cp -r . /var/www/Web-Jimmyxe
+sudo mkdir -p /var/www/jimmyxe
+sudo cp -r . /var/www/jimmyxe
 
 # Définir les permissions
-sudo chown -R www-data:www-data /var/www/Web-Jimmyxe
-sudo chmod -R 755 /var/www/Web-Jimmyxe
+sudo chown -R www-data:www-data /var/www/jimmyxe
+sudo chmod -R 755 /var/www/jimmyxe
 
 # Activer le site et redémarrer Apache
 sudo a2ensite jimmyxe
@@ -136,7 +137,7 @@ sudo certbot --apache -d votre_domaine.com -d www.votre_domaine.com
 Pour mettre à jour le site :
 
 ```bash
-cd /var/www/Web-Jimmyxe
+cd /var/www/jimmyxe
 source venv/bin/activate
 git pull
 python manage.py migrate
