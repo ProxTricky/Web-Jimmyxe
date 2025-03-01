@@ -18,7 +18,7 @@ class Schedule(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ['day']
+        ordering = ['day', 'time']
 
     def __str__(self):
         return f"{self.day} - {self.time} - {self.game}"
@@ -28,14 +28,17 @@ class SocialLink(models.Model):
         ('twitch', 'Twitch'),
         ('youtube', 'YouTube'),
         ('twitter', 'Twitter'),
-        ('tiktok', 'TikTok'),
         ('instagram', 'Instagram'),
+        ('tiktok', 'TikTok'),
         ('discord', 'Discord'),
     ]
 
     platform = models.CharField(max_length=20, choices=PLATFORMS)
     url = models.URLField()
     is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['platform']
 
     def __str__(self):
         return f"{self.get_platform_display()} - {self.url}"
