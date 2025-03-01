@@ -1,0 +1,151 @@
+{% extends 'website/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}JimmyXE - Administration{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 py-20">
+    <div class="container mx-auto px-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-6">Panneau d'administration</h1>
+            
+            <!-- Tabs -->
+            <div class="mb-6 border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-button active px-4 py-2" data-tab="schedule">Planning</button>
+                    <button class="tab-button px-4 py-2" data-tab="social">Réseaux Sociaux</button>
+                    <button class="tab-button px-4 py-2" data-tab="banners">Bannières</button>
+                </nav>
+            </div>
+
+            <!-- Schedule Tab -->
+            <div id="schedule-tab" class="tab-content">
+                <form method="post" class="mb-8">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="schedule">
+                    {{ schedule_form|crispy }}
+                    <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                        Ajouter au planning
+                    </button>
+                </form>
+
+                <div class="space-y-4">
+                    {% for item in schedule %}
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-medium">{{ item.day }}</h3>
+                                <p class="text-gray-600">{{ item.time|time:"H:i" }} - {{ item.game }}</p>
+                                {% if item.description %}
+                                <p class="text-sm text-gray-500">{{ item.description }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="flex space-x-2">
+                                <form method="post" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="schedule_delete">
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <button type="submit" class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Social Links Tab -->
+            <div id="social-tab" class="tab-content hidden">
+                <form method="post" class="mb-8">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="social">
+                    {{ social_form|crispy }}
+                    <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                        Ajouter le réseau social
+                    </button>
+                </form>
+
+                <div class="space-y-4">
+                    {% for link in social_links %}
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-medium">{{ link.get_platform_display }}</h3>
+                                <a href="{{ link.url }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                    {{ link.url }}
+                                </a>
+                            </div>
+                            <div class="flex space-x-2">
+                                <form method="post" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="social_delete">
+                                    <input type="hidden" name="id" value="{{ link.id }}">
+                                    <button type="submit" class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Banners Tab -->
+            <div id="banners-tab" class="tab-content hidden">
+                <form method="post" enctype="multipart/form-data" class="mb-8">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="banner">
+                    {{ banner_form|crispy }}
+                    <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                        Ajouter la bannière
+                    </button>
+                </form>
+
+                <div class="grid grid-cols-2 gap-4">
+                    {% for banner in banners %}
+                    <div class="relative">
+                        <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="w-full h-40 object-cover rounded">
+                        <div class="absolute top-2 right-2 flex space-x-2">
+                            <form method="post" class="inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="banner_delete">
+                                <input type="hidden" name="id" value="{{ banner.id }}">
+                                <button type="submit" class="bg-red-500 text-white p-2 rounded hover:bg-red-600">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <p class="mt-2 font-medium">{{ banner.title }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab Navigation
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active', 'text-purple-600', 'border-purple-600'));
+            tabContents.forEach(c => c.classList.add('hidden'));
+            
+            // Add active class to clicked tab
+            tab.classList.add('active', 'text-purple-600', 'border-purple-600');
+            document.getElementById(`${tab.dataset.tab}-tab`).classList.remove('hidden');
+        });
+    });
+});
+</script>
+{% endblock %}

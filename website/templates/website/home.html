@@ -1,0 +1,103 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-purple-900/50 to-gray-900"></div>
+    {% if banners.first %}
+    <img src="{{ banners.first.image.url }}" alt="Background" class="absolute inset-0 w-full h-full object-cover -z-10">
+    {% endif %}
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">JimmyXE</h1>
+        <p class="text-xl md:text-2xl mb-8">Streamer & Content Creator</p>
+        <a href="https://twitch.tv/twitchjimmyxe" target="_blank" 
+           class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg transition">
+            Rejoins le stream !
+        </a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">À propos</h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <p class="text-lg">Salut à tous ! Je suis JimmyXE, streamer passionné et créateur de contenu. 
+                Je partage avec vous ma passion des jeux vidéo et bien plus encore !</p>
+                <p class="text-lg">Rejoignez-moi pour des streams pleins d'énergie, de fun et une communauté incroyable !</p>
+            </div>
+            <div class="relative">
+                {% if banners.last %}
+                <img src="{{ banners.last.image.url }}" alt="JimmyXE" class="rounded-lg shadow-xl">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Schedule Section -->
+<section id="schedule" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Planning des Streams</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            {% for item in schedule %}
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">{{ item.day }}</h3>
+                <p class="text-purple-400">{{ item.time|time:"H:i" }}</p>
+                <p class="text-gray-300">{{ item.game }}</p>
+                {% if item.description %}
+                <p class="text-sm text-gray-400 mt-2">{{ item.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Social Media Section -->
+<section id="social" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Mes Réseaux</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {% for link in social_links %}
+            <a href="{{ link.url }}" target="_blank" 
+               class="p-6 bg-gray-700 rounded-lg hover:bg-purple-600 transition">
+                <i class="fab fa-{{ link.platform }} text-4xl mb-4"></i>
+                <p>{{ link.get_platform_display }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Mobile Menu Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const nav = document.querySelector('nav');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                const mobileMenu = document.querySelector('.mobile-menu');
+                if (!mobileMenu) {
+                    const menu = document.createElement('div');
+                    menu.className = 'mobile-menu absolute top-full left-0 right-0 bg-gray-800 bg-opacity-95 backdrop-blur-sm';
+                    menu.innerHTML = `
+                        <a href="#about" class="block py-2 px-4 hover:text-purple-500 transition">À propos</a>
+                        <a href="#streams" class="block py-2 px-4 hover:text-purple-500 transition">Streams</a>
+                        <a href="#schedule" class="block py-2 px-4 hover:text-purple-500 transition">Planning</a>
+                        <a href="#social" class="block py-2 px-4 hover:text-purple-500 transition">Réseaux</a>
+                    `;
+                    nav.appendChild(menu);
+                } else {
+                    mobileMenu.remove();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

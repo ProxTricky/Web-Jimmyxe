@@ -1,0 +1,88 @@
+/* Admin Panel Styles */
+
+/* Tab Buttons */
+.tab-button {
+    @apply px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}
+
+.tab-button.active {
+    @apply border-b-2 border-purple-500 text-purple-600;
+}
+
+/* Form Controls */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50;
+}
+
+/* Buttons */
+.btn-primary {
+    @apply bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50;
+}
+
+.btn-secondary {
+    @apply bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50;
+}
+
+/* Card Styles */
+.admin-card {
+    @apply bg-white shadow-md rounded-lg p-6 mb-6;
+}
+
+/* Schedule Items */
+.schedule-item {
+    @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+.schedule-item button {
+    @apply opacity-0 transition-opacity duration-150;
+}
+
+.schedule-item:hover button {
+    @apply opacity-100;
+}
+
+/* Social Links */
+.social-link {
+    @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+/* Banner Items */
+.banner-item {
+    @apply relative group;
+}
+
+.banner-item .delete-banner {
+    @apply opacity-0 group-hover:opacity-100 transition-opacity duration-150;
+}
+
+/* Animations */
+.fade-enter {
+    @apply opacity-0;
+}
+
+.fade-enter-active {
+    @apply opacity-100 transition-opacity duration-150;
+}
+
+.fade-exit {
+    @apply opacity-100;
+}
+
+.fade-exit-active {
+    @apply opacity-0 transition-opacity duration-150;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .admin-card {
+        @apply p-4;
+    }
+    
+    .tab-button {
+        @apply text-xs px-2;
+    }
+}

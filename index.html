@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JimmyXE - Streamer & Content Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Header/Navigation -->
+    <header class="fixed w-full bg-gray-800 bg-opacity-90 backdrop-blur-sm z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-3xl font-bold text-purple-500">JimmyXE</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#about" class="hover:text-purple-500 transition">À propos</a>
+                    <a href="#streams" class="hover:text-purple-500 transition">Streams</a>
+                    <a href="#schedule" class="hover:text-purple-500 transition">Planning</a>
+                    <a href="#social" class="hover:text-purple-500 transition">Réseaux</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/50 to-gray-900"></div>
+        <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover -z-10">
+            <source src="assets/background.mp4" type="video/mp4">
+        </video>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">JimmyXE</h1>
+            <p class="text-xl md:text-2xl mb-8">Streamer & Content Creator</p>
+            <a href="https://twitch.tv/twitchjimmyxe" target="_blank" 
+               class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg transition">
+                Rejoins le stream !
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">À propos</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg">Salut à tous ! Je suis JimmyXE, streamer passionné et créateur de contenu. 
+                    Je partage avec vous ma passion des jeux vidéo et bien plus encore !</p>
+                    <p class="text-lg">Rejoignez-moi pour des streams pleins d'énergie, de fun et une communauté incroyable !</p>
+                </div>
+                <div class="relative">
+                    <img src="assets/profile.jpg" alt="JimmyXE" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stream Section -->
+    <section id="streams" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Derniers Streams</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="twitch-embed bg-gray-800 rounded-lg overflow-hidden">
+                    <!-- Twitch embed will be added here via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Planning des Streams</h2>
+            <div class="grid md:grid-cols-7 gap-4">
+                <!-- Schedule content will be added dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section id="social" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Mes Réseaux</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <a href="https://twitch.tv/twitchjimmyxe" target="_blank" 
+                   class="p-6 bg-gray-800 rounded-lg hover:bg-purple-600 transition">
+                    <i class="fab fa-twitch text-4xl mb-4"></i>
+                    <p>Twitch</p>
+                </a>
+                <a href="https://youtube.com/@JimmyXE" target="_blank" 
+                   class="p-6 bg-gray-800 rounded-lg hover:bg-red-600 transition">
+                    <i class="fab fa-youtube text-4xl mb-4"></i>
+                    <p>YouTube</p>
+                </a>
+                <a href="https://tiktok.com/@jimmyxe" target="_blank" 
+                   class="p-6 bg-gray-800 rounded-lg hover:bg-blue-400 transition">
+                    <i class="fab fa-tiktok text-4xl mb-4"></i>
+                    <p>TikTok</p>
+                </a>
+                <a href="https://twitter.com/jimmyxe_" target="_blank" 
+                   class="p-6 bg-gray-800 rounded-lg hover:bg-blue-500 transition">
+                    <i class="fab fa-twitter text-4xl mb-4"></i>
+                    <p>Twitter</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 JimmyXE. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
