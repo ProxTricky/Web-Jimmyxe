@@ -7,119 +7,121 @@ Site web moderne pour le streamer TwitchJimmyXE développé avec Django et Tailw
 - Python 3.10+
 - pip (gestionnaire de paquets Python)
 - virtualenv
+- Apache2
 
 ## Installation sur Debian 12
 
-1. Mettre à jour le système et installer les dépendances :
+### 1. Mise à jour du système et installation des dépendances
+
 ```bash
 sudo apt update
-sudo apt upgrade
-sudo apt install python3-pip python3-venv nginx
+sudo apt upgrade -y
+sudo apt install -y python3-pip python3-venv apache2 libapache2-mod-wsgi-py3
 ```
 
-2. Créer et activer un environnement virtuel :
+### 2. Configuration de l'environnement Python
+
 ```bash
+# Cloner le dépôt
+git clone https://github.com/ProxTricky/Web-Jimmyxe.git
+cd Web-Jimmyxe
+
+# Créer et activer l'environnement virtuel
 python3 -m venv venv
 source venv/bin/activate
-```
 
-3. Cloner le projet et installer les dépendances :
-```bash
-git clone <votre-repo>
-cd jimmyxe
+# Installer les dépendances
 pip install -r requirements.txt
 ```
 
-4. Créer le fichier .env :
+### 3. Configuration de Django
+
 ```bash
+# Créer le fichier .env
 cat > .env << EOL
-SECRET_KEY=votre_cle_secrete
+SECRET_KEY=votre_clé_secrète_ici
 DEBUG=False
 ALLOWED_HOSTS=votre_domaine.com,www.votre_domaine.com
 EOL
-```
 
-5. Configurer la base de données :
-```bash
+# Appliquer les migrations
 python manage.py migrate
-python manage.py createsuperuser
-```
 
-6. Collecter les fichiers statiques :
-```bash
+# Créer un superutilisateur
+python manage.py createsuperuser
+
+# Collecter les fichiers statiques
 python manage.py collectstatic
 ```
 
-7. Configurer Nginx :
+### 4. Configuration d'Apache2
+
 ```bash
-sudo nano /etc/nginx/sites-available/jimmyxe
+# Créer la configuration Apache
+sudo nano /etc/apache2/sites-available/jimmyxe.conf
 ```
 
 Ajouter la configuration suivante :
-```nginx
-server {
-    server_name votre_domaine.com www.votre_domaine.com;
+
+```apache
+<VirtualHost *:80>
+    ServerName votre_domaine.com
+    ServerAlias www.votre_domaine.com
     
-    location = /favicon.ico { access_log off; log_not_found off; }
+    Alias /static/ /var/www/Web-Jimmyxe/static/
+    Alias /media/ /var/www/Web-Jimmyxe/media/
     
-    location /static/ {
-        root /chemin/vers/votre/projet;
-    }
-
-    location /media/ {
-        root /chemin/vers/votre/projet;
-    }
-
-    location / {
-        include proxy_params;
-        proxy_pass http://unix:/run/gunicorn.sock;
-    }
-}
+    <Directory /var/www/Web-Jimmyxe/static>
+        Require all granted
+    </Directory>
+    
+    <Directory /var/www/Web-Jimmyxe/media>
+        Require all granted
+    </Directory>
+    
+    <Directory /var/www/Web-Jimmyxe/jimmyxe>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+    
+    WSGIDaemonProcess jimmyxe python-path=/var/www/Web-Jimmyxe python-home=/var/www/Web-Jimmyxe/venv
+    WSGIProcessGroup jimmyxe
+    WSGIScriptAlias / /var/www/Web-Jimmyxe/jimmyxe/wsgi.py
+</VirtualHost>
 ```
 
-8. Activer le site et configurer SSL avec Certbot :
+### 5. Finalisation de l'installation
+
 ```bash
-sudo ln -s /etc/nginx/sites-available/jimmyxe /etc/nginx/sites-enabled/
-sudo certbot --nginx -d votre_domaine.com -d www.votre_domaine.com
+# Copier le projet dans /var/www/
+sudo cp -r . /var/www/Web-Jimmyxe
+
+# Définir les permissions
+sudo chown -R www-data:www-data /var/www/Web-Jimmyxe
+sudo chmod -R 755 /var/www/Web-Jimmyxe
+
+# Activer le site et redémarrer Apache
+sudo a2ensite jimmyxe
+sudo a2enmod wsgi
+sudo systemctl restart apache2
 ```
 
-9. Configurer Gunicorn comme service systemd :
+### 6. Configuration SSL (optionnel mais recommandé)
+
 ```bash
-sudo nano /etc/systemd/system/gunicorn.service
-```
+# Installer Certbot
+sudo apt install -y certbot python3-certbot-apache
 
-Ajouter :
-```ini
-[Unit]
-Description=gunicorn daemon
-After=network.target
-
-[Service]
-User=votre_utilisateur
-Group=www-data
-WorkingDirectory=/chemin/vers/votre/projet
-ExecStart=/chemin/vers/votre/projet/venv/bin/gunicorn \
-    --access-logfile - \
-    --workers 3 \
-    --bind unix:/run/gunicorn.sock \
-    jimmyxe.wsgi:application
-
-[Install]
-WantedBy=multi-user.target
-```
-
-10. Démarrer les services :
-```bash
-sudo systemctl start gunicorn
-sudo systemctl enable gunicorn
-sudo systemctl restart nginx
+# Obtenir un certificat SSL
+sudo certbot --apache -d votre_domaine.com -d www.votre_domaine.com
 ```
 
 ## Administration
 
-Accédez à l'interface d'administration via :
-- URL : https://votre_domaine.com/admin
-- Utilisez les identifiants créés avec createsuperuser
+1. Accédez à `http://votre_domaine.com/admin`
+2. Connectez-vous avec les identifiants du superutilisateur
+3. Gérez le planning, les réseaux sociaux et les bannières
 
 ## Fonctionnalités
 
@@ -132,13 +134,14 @@ Accédez à l'interface d'administration via :
 ## Maintenance
 
 Pour mettre à jour le site :
+
 ```bash
+cd /var/www/Web-Jimmyxe
 source venv/bin/activate
 git pull
-pip install -r requirements.txt
 python manage.py migrate
-python manage.py collectstatic --noinput
-sudo systemctl restart gunicorn
+python manage.py collectstatic
+sudo systemctl restart apache2
 ```
 
 ## Sauvegarde
