@@ -1,0 +1,31 @@
+/* Custom styles */
+.bg-gradient-custom {
+    background: linear-gradient(135deg, #6b46c1 0%, #4299e1 100%);
+}
+
+.hover-scale {
+    transition: transform 0.2s;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Custom utilities */
+.backdrop-blur {
+    backdrop-filter: blur(8px);
+}
