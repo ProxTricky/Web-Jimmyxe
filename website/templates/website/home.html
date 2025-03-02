@@ -13,26 +13,20 @@
     <div class="container mx-auto px-4">
         <div class="stream-container">
             <h2 class="stream-title">Stream en Direct</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe
-                            src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
-                            frameborder="0"
-                            allowfullscreen="true"
-                            scrolling="no"
-                            height="100%"
-                            width="100%">
-                        </iframe>
-                    </div>
+            <div class="twitch-embed-container">
+                <div class="twitch-player">
+                    <iframe
+                        src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
+                        frameborder="0"
+                        allowfullscreen="true"
+                        scrolling="no">
+                    </iframe>
                 </div>
-                <div class="lg:col-span-1">
+                <div class="twitch-chat">
                     <iframe
                         src="https://www.twitch.tv/embed/twitchjimmyxe/chat?parent=proxtricky.fr"
                         frameborder="0"
-                        scrolling="no"
-                        height="500"
-                        width="100%">
+                        scrolling="no">
                     </iframe>
                 </div>
             </div>
@@ -40,26 +34,23 @@
     </div>
 </section>
 
-<section id="schedule" class="section">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title">Planning des Streams</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for schedule in schedules %}
-                {% if schedule.is_active %}
-                <div class="schedule-card">
-                    <h3 class="text-xl font-bold mb-2">{{ schedule.day }}</h3>
-                    <p class="text-lg mb-2">{{ schedule.time|time:"H:i" }}</p>
-                    <p class="text-purple-400 mb-2">{{ schedule.game }}</p>
-                    {% if schedule.description %}
-                    <p class="text-gray-400">{{ schedule.description }}</p>
-                    {% endif %}
+<section class="schedule-section" id="planning">
+    <div class="container mx-auto px-4">
+        <div class="schedule-container">
+            <h2 class="section-title">Planning des Streams</h2>
+            <div class="schedule-grid">
+                <div class="schedule-day">
+                    <h3>Lundi</h3>
+                    <p>06:00 - Minecraft</p>
+                    <p>Let's play hardcore avec vous !</p>
                 </div>
-                {% endif %}
-            {% empty %}
-                <div class="col-span-3 text-center text-gray-400">
-                    Aucun horaire de stream n'est programmé pour le moment.
+                <div class="schedule-day">
+                    <h3>Mardi</h3>
+                    <p>08:00 - Divers</p>
+                    <p>Découverte de nouveaux jeux</p>
                 </div>
-            {% endfor %}
+                <!-- Ajoutez d'autres jours selon votre planning -->
+            </div>
         </div>
     </div>
 </section>
