@@ -9,20 +9,18 @@
     </div>
 </section>
 
-<section class="stream-section" id="stream">
-    <div class="container">
-        <div class="stream-container">
-            <h2 class="stream-title">Stream en Direct</h2>
-            <div class="stream-layout">
+<div class="main-content">
+    <section class="stream-section" id="stream">
+        <div class="section-container">
+            <h2 class="section-title">Stream en Direct</h2>
+            <div class="stream-container">
                 <div class="stream-player">
-                    <div class="aspect-ratio-box">
-                        <iframe
-                            src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
-                            frameborder="0"
-                            allowfullscreen="true"
-                            scrolling="no">
-                        </iframe>
-                    </div>
+                    <iframe
+                        src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
+                        frameborder="0"
+                        allowfullscreen="true"
+                        scrolling="no">
+                    </iframe>
                 </div>
                 <div class="stream-chat">
                     <iframe
@@ -33,33 +31,48 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="schedule-section" id="planning">
-    <div class="container">
-        <div class="schedule-container">
+    <section class="schedule-section" id="planning">
+        <div class="section-container">
             <h2 class="section-title">Planning des Streams</h2>
             <div class="schedule-grid">
-                <div class="schedule-day">
-                    <h3>Lundi</h3>
-                    <p class="schedule-time">06:00 - Minecraft</p>
-                    <p class="schedule-desc">Let's play hardcore avec vous !</p>
+                <div class="schedule-card">
+                    <div class="schedule-card-header">
+                        <h3>Lundi</h3>
+                    </div>
+                    <div class="schedule-card-content">
+                        <div class="schedule-time">06:00</div>
+                        <div class="schedule-game">Minecraft</div>
+                        <div class="schedule-desc">Let's play hardcore avec vous !</div>
+                    </div>
                 </div>
-                <div class="schedule-day">
-                    <h3>Mardi</h3>
-                    <p class="schedule-time">08:00 - Divers</p>
-                    <p class="schedule-desc">Découverte de nouveaux jeux</p>
+
+                <div class="schedule-card">
+                    <div class="schedule-card-header">
+                        <h3>Mardi</h3>
+                    </div>
+                    <div class="schedule-card-content">
+                        <div class="schedule-time">08:00</div>
+                        <div class="schedule-game">Divers</div>
+                        <div class="schedule-desc">Découverte de nouveaux jeux</div>
+                    </div>
                 </div>
-                <div class="schedule-day">
-                    <h3>Mercredi</h3>
-                    <p class="schedule-time">20:00 - Among Us</p>
-                    <p class="schedule-desc">Soirée délire avec la commu !</p>
+
+                <div class="schedule-card">
+                    <div class="schedule-card-header">
+                        <h3>Mercredi</h3>
+                    </div>
+                    <div class="schedule-card-content">
+                        <div class="schedule-time">20:00</div>
+                        <div class="schedule-game">Among Us</div>
+                        <div class="schedule-desc">Soirée délire avec la commu !</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <div class="secret-click" title="Click me 3 times!"></div>
 
@@ -105,7 +118,7 @@ const trollMessages = [
     "C'est pas un bug, c'est une feature"
 ];
 
-const streamTitle = document.querySelector('.stream-title');
+const streamTitle = document.querySelector('.section-title');
 let currentMessage = 0;
 
 setInterval(() => {

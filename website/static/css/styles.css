@@ -5,6 +5,8 @@
     --accent-color: #FF4500;
     --gradient-start: #9146FF;
     --gradient-end: #FF4500;
+    --card-bg: rgba(30, 30, 35, 0.95);
+    --card-border: rgba(145, 70, 255, 0.2);
 }
 
 /* Base styles */
@@ -16,11 +18,10 @@ body {
     min-height: 100vh;
 }
 
-.container {
-    width: 100%;
+.main-content {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 2rem;
 }
 
 /* Hero Section */
@@ -70,52 +71,58 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Stream Section */
-.stream-section {
-    padding: 4rem 0;
-    background: rgba(20, 20, 25, 0.95);
+/* Section Styles */
+section {
+    margin-bottom: 4rem;
 }
 
-.stream-container {
-    background: rgba(30, 30, 35, 0.95);
+.section-container {
+    background: var(--card-bg);
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(145, 70, 255, 0.2);
+    border: 1px solid var(--card-border);
 }
 
-.stream-title {
+.section-title {
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 2rem;
     text-align: center;
     color: white;
+    position: relative;
 }
 
-.stream-layout {
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 2px;
+}
+
+/* Stream Section */
+.stream-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
-    height: 600px;
+    margin-top: 2rem;
 }
 
 .stream-player {
     position: relative;
     width: 100%;
-    height: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
     background: var(--twitch-dark);
     border-radius: 8px;
     overflow: hidden;
 }
 
-.aspect-ratio-box {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.stream-player iframe,
-.stream-chat iframe {
+.stream-player iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -125,66 +132,71 @@ body {
 }
 
 .stream-chat {
+    height: 500px;
     background: var(--twitch-dark);
     border-radius: 8px;
     overflow: hidden;
+}
+
+.stream-chat iframe {
+    width: 100%;
     height: 100%;
+    border: none;
 }
 
 /* Schedule Section */
-.schedule-section {
-    padding: 4rem 0;
-    background: rgba(20, 20, 25, 0.95);
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-.schedule-container {
-    background: rgba(30, 30, 35, 0.95);
-    border-radius: 16px;
-    padding: 2rem;
-    border: 1px solid rgba(145, 70, 255, 0.2);
+.schedule-card {
+    background: var(--twitch-dark);
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
+.schedule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.schedule-card-header {
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    padding: 1rem;
     text-align: center;
+}
+
+.schedule-card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
     color: white;
 }
 
-.schedule-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.schedule-day {
-    background: rgba(40, 40, 45, 0.95);
+.schedule-card-content {
     padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(145, 70, 255, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.schedule-day:hover {
-    transform: translateY(-5px);
-}
-
-.schedule-day h3 {
-    font-size: 1.5rem;
-    color: var(--twitch-purple);
-    margin-bottom: 1rem;
 }
 
 .schedule-time {
-    font-size: 1.1rem;
-    color: #fff;
-    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--twitch-purple);
+    margin-bottom: 0.5rem;
+}
+
+.schedule-game {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.5rem;
 }
 
 .schedule-desc {
     color: #ccc;
-    margin: 0.5rem 0;
+    font-size: 1rem;
 }
 
 /* Easter Eggs */
@@ -225,23 +237,21 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-    .stream-layout {
-        grid-template-columns: 1fr;
-        height: auto;
+@media (max-width: 1200px) {
+    .main-content {
+        padding: 1rem;
     }
-
-    .stream-player {
-        height: 0;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    
+    .stream-container {
+        grid-template-columns: 1fr;
     }
 
     .stream-chat {
         height: 400px;
     }
 
-    .container {
-        padding: 0 0.5rem;
+    .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -250,18 +260,16 @@ body {
         font-size: 2.5rem;
     }
 
-    .stream-container,
-    .schedule-container {
-        padding: 1rem;
-    }
-
-    .stream-title,
     .section-title {
         font-size: 2rem;
     }
 
     .schedule-grid {
         grid-template-columns: 1fr;
+    }
+
+    .section-container {
+        padding: 1rem;
     }
 
     .stream-chat {
