@@ -10,19 +10,21 @@
 </section>
 
 <section class="stream-section" id="stream">
-    <div class="container mx-auto px-4">
+    <div class="container">
         <div class="stream-container">
             <h2 class="stream-title">Stream en Direct</h2>
-            <div class="twitch-embed-container">
-                <div class="twitch-player">
-                    <iframe
-                        src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
-                        frameborder="0"
-                        allowfullscreen="true"
-                        scrolling="no">
-                    </iframe>
+            <div class="stream-layout">
+                <div class="stream-player">
+                    <div class="aspect-ratio-box">
+                        <iframe
+                            src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
+                            frameborder="0"
+                            allowfullscreen="true"
+                            scrolling="no">
+                        </iframe>
+                    </div>
                 </div>
-                <div class="twitch-chat">
+                <div class="stream-chat">
                     <iframe
                         src="https://www.twitch.tv/embed/twitchjimmyxe/chat?parent=proxtricky.fr"
                         frameborder="0"
@@ -35,117 +37,80 @@
 </section>
 
 <section class="schedule-section" id="planning">
-    <div class="container mx-auto px-4">
+    <div class="container">
         <div class="schedule-container">
             <h2 class="section-title">Planning des Streams</h2>
             <div class="schedule-grid">
                 <div class="schedule-day">
                     <h3>Lundi</h3>
-                    <p>06:00 - Minecraft</p>
-                    <p>Let's play hardcore avec vous !</p>
+                    <p class="schedule-time">06:00 - Minecraft</p>
+                    <p class="schedule-desc">Let's play hardcore avec vous !</p>
                 </div>
                 <div class="schedule-day">
                     <h3>Mardi</h3>
-                    <p>08:00 - Divers</p>
-                    <p>Découverte de nouveaux jeux</p>
+                    <p class="schedule-time">08:00 - Divers</p>
+                    <p class="schedule-desc">Découverte de nouveaux jeux</p>
                 </div>
-                <!-- Ajoutez d'autres jours selon votre planning -->
+                <div class="schedule-day">
+                    <h3>Mercredi</h3>
+                    <p class="schedule-time">20:00 - Among Us</p>
+                    <p class="schedule-desc">Soirée délire avec la commu !</p>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section id="social" class="section bg-opacity-95">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title">Réseaux Sociaux</h2>
-        <div class="social-grid">
-            {% for social in social_links %}
-                {% if social.is_active %}
-                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <i class="fab fa-{{ social.platform }} text-{{ social.platform }}-400"></i>
-                    <span>{{ social.get_platform_display }}</span>
-                </a>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="about" class="section">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title">À propos</h2>
-        <div class="max-w-3xl mx-auto text-center">
-            <p class="text-xl leading-relaxed">
-                Passionné de jeux vidéo et de partage, je stream régulièrement sur Twitch.
-                Rejoignez-moi pour des sessions de gaming, du fun et une communauté exceptionnelle !
-            </p>
         </div>
     </div>
 </section>
 
 <div class="secret-click" title="Click me 3 times!"></div>
 
-{% endblock %}
-
-{% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Loading screen
-    setTimeout(() => {
-        document.querySelector('.loading-overlay').style.opacity = '0';
-        setTimeout(() => {
-            document.querySelector('.loading-overlay').style.display = 'none';
-        }, 500);
-    }, 1000);
+// Konami Code
+let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiPosition = 0;
 
-    // Konami Code
-    let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiPosition = 0;
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === konamiCode[konamiPosition]) {
-            konamiPosition++;
-            if (konamiPosition === konamiCode.length) {
-                document.body.classList.add('konami-active');
-                setTimeout(() => {
-                    document.body.classList.remove('konami-active');
-                }, 5000);
-                konamiPosition = 0;
-            }
-        } else {
+document.addEventListener('keydown', function(e) {
+    if (e.key === konamiCode[konamiPosition]) {
+        konamiPosition++;
+        if (konamiPosition === konamiCode.length) {
+            document.body.classList.add('konami-active');
+            setTimeout(() => {
+                document.body.classList.remove('konami-active');
+            }, 5000);
             konamiPosition = 0;
         }
-    });
-
-    // Secret Click
-    let secretClicks = 0;
-    document.querySelector('.secret-click').addEventListener('click', function() {
-        secretClicks++;
-        if (secretClicks === 3) {
-            this.classList.add('active');
-            setTimeout(() => {
-                this.classList.remove('active');
-                secretClicks = 0;
-            }, 3000);
-        }
-    });
-
-    // Troll Messages
-    const trollMessages = [
-        "Pas de panique, c'est normal si ça lag",
-        "Le stream est pas cassé, c'est voulu",
-        "Oui oui, le chat marche",
-        "T'as essayé de recharger la page ?",
-        "C'est pas un bug, c'est une feature"
-    ];
-
-    const streamTitle = document.querySelector('.stream-title');
-    let currentMessage = 0;
-
-    setInterval(() => {
-        streamTitle.setAttribute('data-tooltip', trollMessages[currentMessage]);
-        currentMessage = (currentMessage + 1) % trollMessages.length;
-    }, 5000);
+    } else {
+        konamiPosition = 0;
+    }
 });
+
+// Secret Click
+let secretClicks = 0;
+document.querySelector('.secret-click').addEventListener('click', function() {
+    secretClicks++;
+    if (secretClicks === 3) {
+        this.classList.add('active');
+        setTimeout(() => {
+            this.classList.remove('active');
+            secretClicks = 0;
+        }, 3000);
+    }
+});
+
+// Troll Messages
+const trollMessages = [
+    "Pas de panique, c'est normal si ça lag",
+    "Le stream est pas cassé, c'est voulu",
+    "Oui oui, le chat marche",
+    "T'as essayé de recharger la page ?",
+    "C'est pas un bug, c'est une feature"
+];
+
+const streamTitle = document.querySelector('.stream-title');
+let currentMessage = 0;
+
+setInterval(() => {
+    streamTitle.setAttribute('data-tooltip', trollMessages[currentMessage]);
+    currentMessage = (currentMessage + 1) % trollMessages.length;
+}, 5000);
 </script>
 {% endblock %}

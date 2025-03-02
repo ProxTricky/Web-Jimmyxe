@@ -14,7 +14,13 @@ body {
     color: white;
     margin: 0;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--twitch-dark) 0%, #1a1a1a 100%);
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 /* Hero Section */
@@ -64,62 +70,18 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Navigation */
-.nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-}
-
-.nav-link:hover {
-    color: var(--twitch-purple);
-    background: rgba(145, 70, 255, 0.1);
-    transform: translateY(-2px);
-}
-
 /* Stream Section */
 .stream-section {
-    background: rgba(20, 20, 25, 0.95);
     padding: 4rem 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.stream-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at top right, rgba(145, 70, 255, 0.1) 0%, transparent 70%);
-    pointer-events: none;
+    background: rgba(20, 20, 25, 0.95);
 }
 
 .stream-container {
     background: rgba(30, 30, 35, 0.95);
     border-radius: 16px;
     padding: 2rem;
-    margin: 2rem auto;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(145, 70, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-    max-width: 1400px;
-}
-
-.stream-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
 }
 
 .stream-title {
@@ -128,36 +90,17 @@ body {
     margin-bottom: 2rem;
     text-align: center;
     color: white;
-    position: relative;
-    transition: all 0.3s ease;
 }
 
-.stream-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 4px;
-    background: var(--twitch-purple);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-}
-
-.stream-title:hover::after {
-    width: 100px;
-}
-
-/* Twitch Embed Container */
-.twitch-embed-container {
+.stream-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 20px;
+    gap: 1.5rem;
     height: 600px;
 }
 
-.twitch-player, .twitch-chat {
+.stream-player {
+    position: relative;
     width: 100%;
     height: 100%;
     background: var(--twitch-dark);
@@ -165,32 +108,54 @@ body {
     overflow: hidden;
 }
 
-.twitch-player iframe, .twitch-chat iframe {
+.aspect-ratio-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.stream-player iframe,
+.stream-chat iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border: none;
 }
 
+.stream-chat {
+    background: var(--twitch-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+}
+
 /* Schedule Section */
 .schedule-section {
-    background: rgba(20, 20, 25, 0.95);
     padding: 4rem 0;
+    background: rgba(20, 20, 25, 0.95);
 }
 
 .schedule-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
     background: rgba(30, 30, 35, 0.95);
     border-radius: 16px;
+    padding: 2rem;
     border: 1px solid rgba(145, 70, 255, 0.2);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: white;
 }
 
 .schedule-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
 }
 
 .schedule-day {
@@ -211,8 +176,14 @@ body {
     margin-bottom: 1rem;
 }
 
-.schedule-day p {
+.schedule-time {
+    font-size: 1.1rem;
     color: #fff;
+    margin: 0.5rem 0;
+}
+
+.schedule-desc {
+    color: #ccc;
     margin: 0.5rem 0;
 }
 
@@ -255,17 +226,22 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .twitch-embed-container {
+    .stream-layout {
         grid-template-columns: 1fr;
         height: auto;
     }
 
-    .twitch-player {
+    .stream-player {
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    }
+
+    .stream-chat {
         height: 400px;
     }
 
-    .twitch-chat {
-        height: 300px;
+    .container {
+        padding: 0 0.5rem;
     }
 }
 
@@ -274,16 +250,21 @@ body {
         font-size: 2.5rem;
     }
 
-    .stream-container {
-        margin: 1rem;
-        padding: 1.5rem;
+    .stream-container,
+    .schedule-container {
+        padding: 1rem;
     }
 
-    .stream-title {
+    .stream-title,
+    .section-title {
         font-size: 2rem;
     }
 
     .schedule-grid {
         grid-template-columns: 1fr;
+    }
+
+    .stream-chat {
+        height: 300px;
     }
 }
