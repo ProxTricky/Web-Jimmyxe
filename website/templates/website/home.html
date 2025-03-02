@@ -2,44 +2,39 @@
 {% load static %}
 
 {% block content %}
-<div class="loading-overlay">
-    <div class="loading-spinner"></div>
-</div>
-
-<section class="hero-section">
-    <div class="hero-background"></div>
+<section class="hero">
     <div class="hero-content">
         <h1 class="hero-title">JimmyXE</h1>
         <p class="hero-subtitle">Streamer & Content Creator</p>
-        <a href="https://twitch.tv/twitchjimmyxe" target="_blank" class="hero-button">Rejoindre le stream</a>
     </div>
 </section>
 
-<section id="stream" class="section">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title" data-troll="Pas de panique, c'est normal si ça lag">Stream en Direct</h2>
-        <div class="twitch-embed-container">
-            <div class="twitch-player-container">
-                <iframe
-                    src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=proxtricky.fr"
-                    height="100%"
-                    width="100%"
-                    frameborder="0"
-                    allowfullscreen="true"
-                    scrolling="no"
-                    allow="autoplay; fullscreen"
-                    class="twitch-embed">
-                </iframe>
-            </div>
-            <div class="twitch-chat-container">
-                <iframe
-                    src="https://www.twitch.tv/embed/twitchjimmyxe/chat?darkpopout&parent=proxtricky.fr"
-                    height="100%"
-                    width="100%"
-                    frameborder="0"
-                    scrolling="no"
-                    class="twitch-chat">
-                </iframe>
+<section class="stream-section" id="stream">
+    <div class="container mx-auto px-4">
+        <div class="stream-container">
+            <h2 class="stream-title">Stream en Direct</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe
+                            src="https://player.twitch.tv/?channel=twitchjimmyxe&parent=jimmyxe.fr"
+                            frameborder="0"
+                            allowfullscreen="true"
+                            scrolling="no"
+                            height="100%"
+                            width="100%">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="lg:col-span-1">
+                    <iframe
+                        src="https://www.twitch.tv/embed/twitchjimmyxe/chat?parent=jimmyxe.fr"
+                        frameborder="0"
+                        scrolling="no"
+                        height="500"
+                        width="100%">
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -97,7 +92,7 @@
     </div>
 </section>
 
-<div class="secret-click" title="Ne pas cliquer"></div>
+<div class="secret-click" title="Click me 3 times!"></div>
 
 {% endblock %}
 
@@ -112,11 +107,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }, 1000);
 
-    // Easter Eggs
-    let clickCount = 0;
-    const secretClick = document.querySelector('.secret-click');
-    const title = document.querySelector('.hero-title');
-    const trollTexts = [
+    // Konami Code
+    let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiPosition = 0;
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === konamiCode[konamiPosition]) {
+            konamiPosition++;
+            if (konamiPosition === konamiCode.length) {
+                document.body.classList.add('konami-active');
+                setTimeout(() => {
+                    document.body.classList.remove('konami-active');
+                }, 5000);
+                konamiPosition = 0;
+            }
+        } else {
+            konamiPosition = 0;
+        }
+    });
+
+    // Secret Click
+    let secretClicks = 0;
+    document.querySelector('.secret-click').addEventListener('click', function() {
+        secretClicks++;
+        if (secretClicks === 3) {
+            this.classList.add('active');
+            setTimeout(() => {
+                this.classList.remove('active');
+                secretClicks = 0;
+            }, 3000);
+        }
+    });
+
+    // Troll Messages
+    const trollMessages = [
         "Pas de panique, c'est normal si ça lag",
         "Le stream est pas cassé, c'est voulu",
         "Oui oui, le chat marche",
@@ -124,44 +148,12 @@ document.addEventListener('DOMContentLoaded', function() {
         "C'est pas un bug, c'est une feature"
     ];
 
-    secretClick.addEventListener('click', () => {
-        clickCount++;
-        if (clickCount === 3) {
-            document.body.classList.add('konami-mode');
-            title.classList.add('bounce');
-        } else if (clickCount === 5) {
-            document.body.classList.remove('konami-mode');
-            title.classList.remove('bounce');
-            clickCount = 0;
-        }
-    });
+    const streamTitle = document.querySelector('.stream-title');
+    let currentMessage = 0;
 
-    // Konami Code
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiIndex = 0;
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === konamiCode[konamiIndex]) {
-            konamiIndex++;
-            if (konamiIndex === konamiCode.length) {
-                document.body.classList.add('konami-mode');
-                title.classList.add('spin');
-                konamiIndex = 0;
-                setTimeout(() => {
-                    document.body.classList.remove('konami-mode');
-                    title.classList.remove('spin');
-                }, 5000);
-            }
-        } else {
-            konamiIndex = 0;
-        }
-    });
-
-    // Random troll messages
-    const sectionTitle = document.querySelector('.section-title');
     setInterval(() => {
-        const randomText = trollTexts[Math.floor(Math.random() * trollTexts.length)];
-        sectionTitle.setAttribute('data-troll', randomText);
+        streamTitle.setAttribute('data-tooltip', trollMessages[currentMessage]);
+        currentMessage = (currentMessage + 1) % trollMessages.length;
     }, 5000);
 });
 </script>
