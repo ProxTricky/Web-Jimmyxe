@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JimmyXE - Streamer & Content Creator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <meta name="description" content="JimmyXE - Streamer Twitch et Créateur de Contenu. Rejoignez la communauté !">
@@ -16,20 +18,24 @@
             <div class="flex justify-between items-center">
                 <a href="{% url 'home' %}" class="text-2xl font-bold">JimmyXE</a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#schedule" class="nav-link">Planning</a>
-                    <a href="#social" class="nav-link">Réseaux Sociaux</a>
-                    <a href="#about" class="nav-link">À propos</a>
+                    <a href="#stream" class="nav-link">Stream</a>
+                    <a href="https://twitch.tv/twitchjimmyxe" target="_blank" class="nav-link">Twitch</a>
+                    <a href="https://discord.gg/jimmyxe" target="_blank" class="nav-link">Discord</a>
+                    <a href="https://youtube.com/@JimmyXE" target="_blank" class="nav-link">YouTube</a>
                 </div>
-                <button class="md:hidden" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button class="md:hidden mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </div>
-        <div id="mobileMenu" class="mobile-menu hidden md:hidden w-full">
-            <div class="container mx-auto px-6 py-4">
-                <a href="#schedule" class="block py-2">Planning</a>
-                <a href="#social" class="block py-2">Réseaux Sociaux</a>
-                <a href="#about" class="block py-2">À propos</a>
+        <div class="md:hidden mobile-menu hidden">
+            <div class="px-4 py-2 space-y-3">
+                <a href="#stream" class="block nav-link">Stream</a>
+                <a href="https://twitch.tv/twitchjimmyxe" target="_blank" class="block nav-link">Twitch</a>
+                <a href="https://discord.gg/jimmyxe" target="_blank" class="block nav-link">Discord</a>
+                <a href="https://youtube.com/@JimmyXE" target="_blank" class="block nav-link">YouTube</a>
             </div>
         </div>
     </nav>
@@ -45,10 +51,10 @@
     </footer>
 
     <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
