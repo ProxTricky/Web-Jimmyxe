@@ -158,3 +158,29 @@
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
 }
+
+/* Twitch layout */
+.twitch-embed-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+    height: 600px;
+}
+
+.twitch-player-container,
+.twitch-chat-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #18181b;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.twitch-embed,
+.twitch-chat {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
