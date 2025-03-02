@@ -19,9 +19,10 @@ body {
 }
 
 .main-content {
-    max-width: 1400px;
+    width: 100%;
+    max-width: 90%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 0;
 }
 
 /* Hero Section */
@@ -74,6 +75,7 @@ body {
 /* Section Styles */
 section {
     margin-bottom: 4rem;
+    width: 100%;
 }
 
 .section-container {
@@ -108,15 +110,17 @@ section {
 /* Stream Section */
 .stream-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     gap: 1.5rem;
     margin-top: 2rem;
+    min-height: 700px;
 }
 
 .stream-player {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    height: 100%;
+    min-height: 700px;
     background: var(--twitch-dark);
     border-radius: 8px;
     overflow: hidden;
@@ -132,7 +136,7 @@ section {
 }
 
 .stream-chat {
-    height: 500px;
+    height: 700px;
     background: var(--twitch-dark);
     border-radius: 8px;
     overflow: hidden;
@@ -237,13 +241,22 @@ section {
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .main-content {
-        padding: 1rem;
+        max-width: 95%;
     }
-    
+}
+
+@media (max-width: 1200px) {
     .stream-container {
         grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .stream-player {
+        height: 0;
+        min-height: 0;
+        padding-bottom: 56.25%;
     }
 
     .stream-chat {
@@ -256,6 +269,11 @@ section {
 }
 
 @media (max-width: 768px) {
+    .main-content {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }
@@ -270,6 +288,7 @@ section {
 
     .section-container {
         padding: 1rem;
+        border-radius: 0;
     }
 
     .stream-chat {
