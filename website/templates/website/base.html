@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JimmyXE - Streamer</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>JimmyXE - Streamer & Content Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <meta name="description" content="JimmyXE - Streamer Twitch et Créateur de Contenu. Rejoignez la communauté !">
+    {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-black text-white">
     <nav class="fixed w-full z-50 bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg">
@@ -59,5 +60,6 @@
             });
         });
     </script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

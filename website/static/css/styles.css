@@ -1,7 +1,29 @@
-/* Custom styles */
+/* Variables */
+:root {
+    --primary: #6441a5;
+    --secondary: #392e5c;
+    --accent: #9146ff;
+    --text: #ffffff;
+    --background: #0e0e10;
+}
+
+/* Base styles */
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Hero section */
 .hero-section {
     position: relative;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
@@ -11,152 +33,109 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../images/bear.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.7);
-    animation: zoomEffect 20s infinite alternate;
-}
-
-@keyframes zoomEffect {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    opacity: 0.8;
+    z-index: -1;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 10;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-title {
-    font-size: 5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    animation: fadeInUp 1s ease-out;
-}
-
-.hero-subtitle {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    animation: fadeInUp 1s ease-out 0.3s backwards;
-}
-
-.hero-button {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid white;
-    color: white;
-    border-radius: 9999px;
-    transition: all 0.3s ease;
-    animation: fadeInUp 1s ease-out 0.6s backwards;
-}
-
-.hero-button:hover {
-    background: white;
-    color: black;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Sections styling */
-.section {
-    padding: 6rem 0;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
     text-align: center;
-}
-
-/* Schedule cards */
-.schedule-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
+    z-index: 1;
     padding: 2rem;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
     transition: transform 0.3s ease;
 }
 
-.schedule-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
+.hero-content:hover {
+    transform: translateZ(20px) rotateX(5deg);
 }
 
-/* Social media links */
-.social-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+.hero-title {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--accent), var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.social-link {
-    display: flex;
-    align-items: center;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    transition: all 0.3s ease;
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
 }
 
-.social-link:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.social-link i {
-    font-size: 2rem;
-    margin-right: 1rem;
-}
-
-/* Navigation */
-.nav-link {
-    position: relative;
-    color: white;
+.hero-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--accent);
+    color: var(--text);
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-link::after {
+.hero-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--accent);
+}
+
+.hero-button::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: white;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: rotate(45deg);
     transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.hero-button:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* Sections */
+.section {
+    padding: 4rem 0;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent);
+    position: relative;
+    cursor: help;
+}
+
+.section-title::after {
+    content: attr(data-troll);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
     transform: translateX(-50%);
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    color: var(--text);
 }
 
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* Mobile menu */
-.mobile-menu {
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
+.section-title:hover::after {
+    opacity: 1;
+    bottom: -30px;
 }
 
 /* Twitch layout */
@@ -164,8 +143,10 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
-    margin: 20px 0;
+    margin: 20px auto;
     height: 600px;
+    max-width: 1400px;
+    padding: 0 20px;
 }
 
 .twitch-player-container,
@@ -174,8 +155,16 @@
     width: 100%;
     height: 100%;
     background: #18181b;
-    border-radius: 8px;
+    border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.twitch-player-container:hover,
+.twitch-chat-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(var(--accent), 0.4);
 }
 
 .twitch-embed,
@@ -183,4 +172,101 @@
     width: 100%;
     height: 100%;
     border: none;
+}
+
+/* Easter Eggs */
+.konami-mode {
+    animation: rainbow 2s linear infinite;
+}
+
+@keyframes rainbow {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.secret-click {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.secret-click:hover::after {
+    content: '👀';
+    position: absolute;
+    font-size: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .twitch-embed-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .twitch-player-container,
+    .twitch-chat-container {
+        height: 400px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+}
+
+/* Loading animation */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--secondary);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* Easter egg animations */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.spin {
+    animation: spin 0.5s linear infinite;
+}
+
+.bounce {
+    animation: bounce 0.5s cubic-bezier(0.36, 0, 0.66, -0.56) infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
 }
