@@ -128,6 +128,47 @@ body {
     margin-right: 1rem;
 }
 
+/* Twitch Stream Section */
+.twitch-embed-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.twitch-embed {
+    aspect-ratio: 16/9;
+    width: 100%;
+    max-width: 850px;
+    border-radius: 10px;
+    background-color: #0f0f0f;
+}
+
+.twitch-chat-container {
+    flex: 1;
+    min-width: 300px;
+}
+
+.twitch-chat {
+    width: 100%;
+    height: 500px;
+    border-radius: 10px;
+    background-color: #0f0f0f;
+}
+
+@media (max-width: 1200px) {
+    .twitch-embed-container {
+        flex-direction: column;
+    }
+    
+    .twitch-chat-container {
+        width: 100%;
+    }
+}
+
 /* Animations */
 @keyframes zoomEffect {
     from { transform: scale(1); }
