@@ -5,15 +5,13 @@ from django.contrib import messages
 from .models import Schedule, SocialLink, Banner
 from .forms import ScheduleForm, SocialLinkForm, BannerForm
 
-class HomeView(TemplateView):
-    template_name = 'website/home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['schedule'] = Schedule.objects.filter(is_active=True)
-        context['social_links'] = SocialLink.objects.filter(is_active=True)
-        context['banners'] = Banner.objects.filter(is_active=True)
-        return context
+def home(request):
+    context = {
+        'schedules': Schedule.objects.filter(is_active=True).order_by('day', 'time'),
+        'social_links': SocialLink.objects.filter(is_active=True).order_by('platform'),
+        'banners': Banner.objects.filter(is_active=True).order_by('order', '-created_at'),
+    }
+    return render(request, 'website/home.html', context)
 
 class AdminDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'website/admin/dashboard.html'
